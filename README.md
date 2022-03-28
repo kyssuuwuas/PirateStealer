@@ -1,4 +1,4 @@
-##### [🌍 Discord Server](https://discord.gg/mysteryshack) -  [:gem: Premium](https://discord.gg/mysteryshack) - [🔧 Builder](https://github.com/Stanley-GF/Arizona) - [💡 Features](https://github.com/Stanley-GF/Arizona/edit/main/README.md#features) 
+##### [🌍 Discord Server](https://discord.gg/mysteryshack) -  [:gem: Premium](https://discord.gg/mysteryshack) - [🔧 Builder](https://github.com/Stanley-GF/Arizona) - [💡 Features](https://github.com/Stanley-GF/Arizona#features) 
 
 # Arizona (by Brooklyn inc)
 The new modern discord token grabber & token stealer, with discord password & token even when it changes (old. PirateStealer)
