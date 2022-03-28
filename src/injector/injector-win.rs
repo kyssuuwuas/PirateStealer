@@ -6,6 +6,7 @@
         - Automatically restart discord and check all running discord processes
         - Pwn BetterDiscord and PowerCord
         - Injection notification to discord and/or slack
+        - Support ALL the available discord clients
 
     Compiling:
         - Install rust from https://rustup.rs.
