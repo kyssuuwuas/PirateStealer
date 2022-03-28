@@ -23,11 +23,14 @@ use std::path::Path;
 
 fn main() {
     let discord_path = get_latest_disc_version();
+    if discord_path.as_str() == "Failed" {
+        std::process::exit(1); // it failed, so close the process with exit code `1`
+    }
 
     let path = Path::new(discord_path.as_str());
     let mut file = String::new();
     file.push_str(path.to_str().unwrap());
-    file.push_str("\\modules\\discord_desktop_core-2\\discord_desktop_core"); 
+    file.push_str("\\modules\\discord_desktop_core-2\\discord_desktop_core");
     file.push_str("\\core.asar");
 
     if check_for_file(file.as_str()) {
