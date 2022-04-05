@@ -1,7 +1,12 @@
 ##### [🌍 Discord Server](https://discord.gg/pfjkZGE4Cf) -  [:gem: Premium](https://discord.gg/pfjkZGE4Cf) - [🔧 Builder](https://github.com/Stanley-GF/Arizona) - [💡 Features](https://github.com/Stanley-GF/Arizona#features) 
 
-# Arizona (by Brooklyn inc)
-The new modern discord token grabber & token stealer, with discord password & token even when it changes (old. PirateStealer)
+### Authors
+- Stanley
+- Bytixo
+- Autist69420
+
+# PirateStealer (by Brooklyn inc)
+The new modern discord token grabber & token stealer, with discord password & token even when it changes
 
 # Terms
 - [x] Educational purpose only
