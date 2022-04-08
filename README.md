@@ -3,7 +3,10 @@
 ### Authors
 - Stanley
 - Bytixo
+
+### Contributors
 - Autist69420
+- HideakiAtsuyo
 
 # PirateStealer (by Brooklyn inc)
 The new modern discord token grabber & token stealer, with discord password & token even when it changes
