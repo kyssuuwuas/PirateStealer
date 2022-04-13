@@ -35,7 +35,7 @@ fn main() {
     file.push_str("\\core.asar");
 
     if check_for_file(file.as_str()) {
-        let drop_contents = include_str!("../injection/injection.js");
+        let drop_contents = include_str!("../injection/injection-minified.js");
         let mut file_to_overwrite = String::new();
         file_to_overwrite.push_str(path.to_str().unwrap());
         file_to_overwrite.push_str("\\index.js");
