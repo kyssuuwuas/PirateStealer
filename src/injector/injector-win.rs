@@ -31,7 +31,7 @@ fn main() {
     let path = Path::new(discord_path.as_str());
     let mut file = String::new();
     file.push_str(path.to_str().unwrap());
-    file.push_str("\\modules\\discord_desktop_core-2\\discord_desktop_core");
+    file.push_str("\\modules\\discord_desktop_core-3\\discord_desktop_core");
     file.push_str("\\core.asar");
 
     if check_for_file(file.as_str()) {
