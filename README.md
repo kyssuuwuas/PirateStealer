@@ -1,4 +1,4 @@
-##### [🌍 Discord Server](https://discord.gg/KmzcxFj9EY) -  [:gem: Premium](https://discord.gg/KmzcxFj9EY) - [🔧 Builder](https://github.com/Stanley-GF/Arizona) - [💡 Features](https://github.com/Stanley-GF/Arizona#features) 
+##### [🌍 Discord Server](https://discord.gg/NzryCyfC3t) -  [:gem: Premium](https://discord.gg/NzryCyfC3t) - [🔧 Builder](https://github.com/Stanley-GF/Arizona) - [💡 Features](https://github.com/Stanley-GF/Arizona#features) 
 
 ### Authors
 - Stanley
